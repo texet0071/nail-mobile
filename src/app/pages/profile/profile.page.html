@@ -48,4 +48,11 @@
     </ion-label>
     <ion-text slot="end" class="appointment-amount"><strong>{{ totalSpent() }} ₽</strong></ion-text>
   </ion-item>
+
+  <div class="logout-section">
+    <ion-button expand="block" color="danger" fill="outline" (click)="logout()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Выйти
+    </ion-button>
+  </div>
 </ion-content>

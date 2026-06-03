@@ -1,0 +1,92 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 3.5rem;
+    margin: 0;
+    background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  h2 {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.profession-selector {
+  margin-top: 1rem;
+
+  .profession-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+  }
+
+  ion-select {
+    width: 100%;
+    --padding-start: 16px;
+    --padding-end: 16px;
+  }
+}
+
+.role-selector {
+  margin-top: 1.5rem;
+
+  .role-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+  }
+
+  .role-buttons {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.register-button-container {
+  margin-top: 2rem;
+
+  ion-button {
+    --background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary));
+    --background-hover: linear-gradient(135deg, var(--ion-color-primary-shade), var(--ion-color-secondary-shade));
+    --box-shadow: 0 4px 16px rgba(230, 138, 158, 0.3);
+    height: 52px;
+    font-size: 1.1rem;
+  }
+}
+
+.register-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+
+  ion-button {
+    font-size: 0.9rem;
+    --color: var(--ion-color-medium);
+  }
+}

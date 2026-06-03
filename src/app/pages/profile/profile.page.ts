@@ -1,6 +1,7 @@
 import { Component, inject, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { MockDataService, Appointment } from '../../services/mock-data.service';
+import { AuthService } from '../../services/auth.service';
 import {
   IonContent,
   IonHeader,
@@ -16,7 +17,7 @@ import {
   IonText,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBackOutline, checkmarkCircleOutline, closeCircleOutline, timeOutline } from 'ionicons/icons';
+import { arrowBackOutline, checkmarkCircleOutline, closeCircleOutline, timeOutline, logOutOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,7 @@ import { arrowBackOutline, checkmarkCircleOutline, closeCircleOutline, timeOutli
 })
 export class ProfilePage {
   private readonly mockData = inject(MockDataService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   /** Реактивный список записей (автоматически обновляется при добавлении новых) */
@@ -53,11 +55,16 @@ export class ProfilePage {
   );
 
   constructor() {
-    addIcons({ arrowBackOutline, checkmarkCircleOutline, closeCircleOutline, timeOutline });
+    addIcons({ arrowBackOutline, checkmarkCircleOutline, closeCircleOutline, timeOutline, logOutOutline });
   }
 
   protected goBack(): void {
     this.router.navigate(['/tabs/news']);
+  }
+
+  protected logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 
   protected getStatusIcon(status: Appointment['status']): string {

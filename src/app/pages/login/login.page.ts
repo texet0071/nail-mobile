@@ -81,13 +81,11 @@ export class LoginPage {
   }
 
   protected onRegister(): void {
-    this.toastMessage.set('Функция регистрации будет доступна позже');
-    this.showToast.set(true);
+    this.router.navigate(['/register']);
   }
 
   protected onRecoverAccount(): void {
-    this.toastMessage.set('Функция восстановления аккаунта будет доступна позже');
-    this.showToast.set(true);
+    this.router.navigate(['/forgot-password']);
   }
 
   protected onVkLogin(): void {

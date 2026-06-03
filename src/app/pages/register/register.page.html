@@ -1,0 +1,95 @@
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <div class="register-header">
+      <h1>💅</h1>
+      <h2>Регистрация</h2>
+      <p>Заполните данные, чтобы создать аккаунт</p>
+    </div>
+
+    <ion-item>
+      <ion-input
+        type="text"
+        [value]="name()"
+        (ionInput)="onNameChange($event)"
+        placeholder="Анна Иванова"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        type="tel"
+        [value]="phone()"
+        (ionInput)="onPhoneChange($event)"
+        placeholder="+7 (999) 123-45-67"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        type="email"
+        [value]="email()"
+        (ionInput)="onEmailChange($event)"
+        placeholder="anna@example.com"
+      ></ion-input>
+    </ion-item>
+
+    <div class="profession-selector">
+      <ion-label class="profession-label">Профессия</ion-label>
+      <ion-select
+        [value]="profession()"
+        (ionChange)="onProfessionChange($event)"
+        interface="popover"
+        placeholder="Выберите профессию"
+      >
+        @for (p of professions; track p.value) {
+          <ion-select-option [value]="p.value">
+            {{ p.label }}
+          </ion-select-option>
+        }
+      </ion-select>
+    </div>
+
+    <div class="role-selector">
+      <ion-label class="role-label">Роль</ion-label>
+      <div class="role-buttons">
+        <ion-button
+          [color]="role() === 'client' ? 'primary' : 'medium'"
+          [fill]="role() === 'client' ? 'solid' : 'outline'"
+          size="small"
+          (click)="onRoleChange('client')"
+        >
+          Клиент
+        </ion-button>
+        <ion-button
+          [color]="role() === 'master' ? 'primary' : 'medium'"
+          [fill]="role() === 'master' ? 'solid' : 'outline'"
+          size="small"
+          (click)="onRoleChange('master')"
+        >
+          Мастер
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="register-button-container">
+      <ion-button expand="block" (click)="onSubmit()">
+        Зарегистрироваться
+      </ion-button>
+    </div>
+
+    <div class="register-links">
+      <ion-button fill="clear" (click)="goToLogin()">
+        Уже есть аккаунт? Войти
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-toast
+    [isOpen]="showToast()"
+    [message]="toastMessage()"
+    [duration]="3000"
+    position="bottom"
+    [color]="toastMessage().includes('успешна') ? 'success' : 'danger'"
+    (didDismiss)="showToast.set(false)"
+  ></ion-toast>
+</ion-content>
