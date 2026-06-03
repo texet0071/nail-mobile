@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
-import { MockDataService, TimeSlot, Appointment } from '../../services/mock-data.service';
+import { MockDataService, TimeSlot, Appointment, ServiceItem } from '../../services/mock-data.service';
 import {
   IonContent,
   IonHeader,
@@ -150,9 +150,13 @@ export class CalendarPage {
     // Обрабатываем результат закрытия модалки
     const { data } = await modal.onDidDismiss();
     if (data) {
+      const services: ServiceItem[] = data.services ?? [];
+      const serviceNames = services.map(s => s.name).join(', ');
+      const totalAmount = data.totalPrice ?? services.reduce((sum, s) => sum + s.price, 0);
+
       // Добавляем новую запись в реактивный список сервиса
       this.mockData.addAppointment({
-        service: data.service.name,
+        service: serviceNames || 'Без услуги',
         client: data.name || 'Клиент',
         clientPhone: data.phone || '',
         clientRating: 0,
@@ -160,7 +164,7 @@ export class CalendarPage {
         master: 'Анна С.',
         date: data.date,
         time: data.time,
-        amount: data.service.price,
+        amount: totalAmount,
         status: 'upcoming',
       });
     }

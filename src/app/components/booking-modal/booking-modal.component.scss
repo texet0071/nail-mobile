@@ -171,9 +171,11 @@
   }
 }
 
-.service-selected {
+.service-card.service-selected {
   border-color: var(--ion-color-primary);
   background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  box-shadow: 0 4px 14px rgba(var(--ion-color-primary-rgb), 0.3);
+  transform: translateY(-1px);
 
   .service-name,
   .service-duration {
@@ -181,6 +183,10 @@
   }
 
   .service-price {
+    color: #fff;
+  }
+
+  .service-check {
     color: #fff;
   }
 }
@@ -218,6 +224,29 @@
 
 .service-check {
   font-size: 1.4rem;
+}
+
+/* Итого выбранных услуг */
+.services-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--ion-color-primary-tint);
+  border-radius: 12px;
+}
+
+.total-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.total-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
 }
 
 /* Шаг 3 — Форма */
@@ -283,11 +312,25 @@
   }
 }
 
-.summary-price {
+.summary-price-row {
+  padding-left: 26px;
+  margin-bottom: 2px;
+
+  .summary-service-price {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ion-color-medium-shade);
+  }
+}
+
+.summary-total {
   font-weight: 700;
   color: var(--ion-color-primary);
   font-size: 1rem;
   margin-bottom: 0;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--ion-color-light-shade);
 }
 
 /* Футер с кнопкой */

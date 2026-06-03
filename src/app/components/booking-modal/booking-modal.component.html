@@ -70,8 +70,8 @@
         @for (service of services(); track service.id) {
           <button
             class="service-card"
-            [class.service-selected]="selectedService()?.id === service.id"
-            (click)="selectService(service)"
+            [class.service-selected]="isServiceSelected(service)"
+            (click)="toggleService(service)"
           >
             <div class="service-info">
               <span class="service-name">{{ service.name }}</span>
@@ -79,11 +79,17 @@
             </div>
             <div class="service-price-block">
               <span class="service-price">{{ service.price }} ₽</span>
-              @if (selectedService()?.id === service.id) {
-                <ion-icon name="checkmark-circle-outline" color="primary" class="service-check"></ion-icon>
+              @if (isServiceSelected(service)) {
+                <ion-icon name="checkmark-circle-outline" class="service-check"></ion-icon>
               }
             </div>
           </button>
+        }
+        @if (totalPrice() > 0) {
+          <div class="services-total">
+            <span class="total-label">Итого:</span>
+            <span class="total-price">{{ totalPrice() }} ₽</span>
+          </div>
         }
       </div>
     </div>
@@ -149,13 +155,18 @@
           <ion-icon name="time-outline" color="primary"></ion-icon>
           <span>{{ formatDate(selectedDate) }}, {{ selectedTime() }}</span>
         </div>
-        <div class="summary-row">
-          <ion-icon name="briefcase-outline" color="primary"></ion-icon>
-          <span>{{ selectedService()?.name }}</span>
-        </div>
-        <div class="summary-row summary-price">
+        @for (service of selectedServices(); track service.id) {
+          <div class="summary-row">
+            <ion-icon name="briefcase-outline" color="primary"></ion-icon>
+            <span>{{ service.name }}</span>
+          </div>
+          <div class="summary-row summary-price-row">
+            <span class="summary-service-price">{{ service.price }} ₽</span>
+          </div>
+        }
+        <div class="summary-row summary-total">
           <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
-          <span>{{ selectedService()?.price }} ₽</span>
+          <span>Итого: {{ totalPrice() }} ₽</span>
         </div>
       </div>
     </div>
@@ -182,7 +193,7 @@
         expand="block"
         color="primary"
         size="large"
-        [disabled]="!selectedService()"
+        [disabled]="selectedServices().length === 0"
         (click)="nextStep()"
       >
         Далее

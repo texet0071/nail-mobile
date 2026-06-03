@@ -1,4 +1,4 @@
-import { Component, inject, signal, Input, afterNextRender } from '@angular/core';
+import { Component, inject, signal, computed, Input, afterNextRender } from '@angular/core';
 import {ModalController, ToastController} from '@ionic/angular/standalone';
 import { MockDataService, TimeSlot, ServiceItem } from '../../services/mock-data.service';
 import {
@@ -62,9 +62,14 @@ export class BookingModalComponent {
   protected readonly timeSlots = signal<TimeSlot[]>([]);
   protected readonly selectedTime = signal<string>('');
 
-  // Шаг 2 — выбор услуги
+  // Шаг 2 — выбор услуг (мульти-селект)
   protected readonly services = signal<ServiceItem[]>([]);
-  protected readonly selectedService = signal<ServiceItem | null>(null);
+  protected readonly selectedServices = signal<ServiceItem[]>([]);
+
+  /** Общая стоимость выбранных услуг */
+  protected readonly totalPrice = computed(() =>
+    this.selectedServices().reduce((sum, s) => sum + s.price, 0)
+  );
 
   // Шаг 3 — контактные данные
   protected readonly phone = signal<string>('');
@@ -104,7 +109,7 @@ export class BookingModalComponent {
   protected nextStep(): void {
     const current = this.step();
     if (current === 1 && !this.selectedTime()) return;
-    if (current === 2 && !this.selectedService()) return;
+    if (current === 2 && this.selectedServices().length === 0) return;
     this.step.set((current + 1) as 1 | 2 | 3);
   }
 
@@ -122,8 +127,19 @@ export class BookingModalComponent {
 
   // ---- Шаг 2 ----
 
-  protected selectService(service: ServiceItem): void {
-    this.selectedService.set(service);
+  protected toggleService(service: ServiceItem): void {
+    this.selectedServices.update(list => {
+      const index = list.findIndex(s => s.id === service.id);
+      if (index === -1) {
+        return [...list, service];
+      }
+      // Убираем из списка (деселект)
+      return list.filter(s => s.id !== service.id);
+    });
+  }
+
+  protected isServiceSelected(service: ServiceItem): boolean {
+    return this.selectedServices().some(s => s.id === service.id);
   }
 
   // ---- Шаг 3 ----
@@ -138,15 +154,18 @@ export class BookingModalComponent {
 
   protected async onSubmit(): Promise<void> {
     const time = this.selectedTime();
-    const service = this.selectedService();
+    const selected = this.selectedServices();
     const phoneValue = this.phone();
     const nameValue = this.name();
 
-    if (!time || !service || !phoneValue || !nameValue) return;
+    if (!time || selected.length === 0 || !phoneValue || !nameValue) return;
+
+    const serviceNames = selected.map(s => s.name).join(', ');
+    const total = this.totalPrice();
 
     // Показываем уведомление об успешной записи
     const toast = await this.toastCtrl.create({
-      message: `✅ Вы записаны!\n${service.name}\n${this.selectedDate} в ${time}`,
+      message: `✅ Вы записаны!\n${serviceNames}\n${this.selectedDate} в ${time}\nСумма: ${total} ₽`,
       duration: 4000,
       position: 'bottom',
       color: 'success',
@@ -156,7 +175,8 @@ export class BookingModalComponent {
     this.modalCtrl.dismiss({
       date: this.selectedDate,
       time,
-      service,
+      services: selected,
+      totalPrice: total,
       phone: phoneValue,
       name: nameValue,
       comment: this.comment(),
