@@ -73,3 +73,22 @@ ion-avatar {
   font-size: 1.2rem;
   font-weight: 600;
 }
+
+/* ===== Центрированное модальное окно (add-post-modal) ===== */
+ion-modal.add-post-modal {
+  --height: auto;
+  --width: 90%;
+  --max-width: 400px;
+  --border-radius: 16px;
+  --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --backdrop-opacity: 0.4;
+
+  align-items: center;
+  justify-content: center;
+}
+
+ion-modal.add-post-modal::part(content) {
+  margin: 0 auto;
+  max-height: 80vh;
+  overflow-y: auto;
+}

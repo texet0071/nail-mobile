@@ -6,11 +6,12 @@ import {
   IonItem, IonList, IonRefresher, IonRefresherContent, IonModal, IonButtons,
   IonFab, IonFabButton
 } from '@ionic/angular/standalone';
-import { AlertController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   personCircleOutline, heartOutline, chatbubbleOutline, closeOutline, timeOutline, add
 } from 'ionicons/icons';
+import { AddPostModalComponent } from '../../components/add-post-modal/add-post-modal.component';
 
 @Component({
   selector: 'app-news',
@@ -26,7 +27,7 @@ import {
 })
 export class NewsPage {
   private readonly mockData = inject(MockDataService);
-  private readonly alertCtrl = inject(AlertController);
+  private readonly modalCtrl = inject(ModalController);
 
   protected readonly posts = this.mockData.posts;
 
@@ -57,34 +58,17 @@ export class NewsPage {
   }
 
   protected async addNewPost(): Promise<void> {
-    const alert = await this.alertCtrl.create({
-      header: 'Новый пост',
-      message: 'Напишите текст нового поста',
-      inputs: [
-        {
-          name: 'text',
-          type: 'textarea',
-          placeholder: 'Текст поста...',
-          attributes: {
-            rows: 4,
-          },
-        },
-      ],
-      buttons: [
-        { text: 'Отмена', role: 'cancel' },
-        {
-          text: 'Опубликовать',
-          handler: (data: { text: string }) => {
-            const text = data.text?.trim();
-            if (text) {
-              this.mockData.addPost(text);
-            }
-            return true;
-          },
-        },
-      ],
+    const modal = await this.modalCtrl.create({
+      component: AddPostModalComponent,
+      cssClass: 'add-post-modal',
     });
 
-    await alert.present();
+    await modal.present();
+
+    const { data, role } = await modal.onDidDismiss<{ text: string; photoUrl?: string }>();
+
+    if (role === 'submit' && data?.text) {
+      this.mockData.addPost(data.text.trim(), data.photoUrl);
+    }
   }
 }

@@ -1,3 +1,17 @@
+.post-photo-wrapper {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.post-photo {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
 /* ——— Уменьшенный хедер ——— */
 ion-header ion-toolbar {
   --min-height: 44px;

@@ -17,6 +17,7 @@ export interface Post {
   likes: number;
   comments: number;
   commentsList: Comment[];
+  photoUrl?: string;
 }
 
 export interface MasterProfile {
@@ -319,7 +320,7 @@ export class MockDataService {
   }
 
   /** Добавляет новый пост в начало ленты */
-  addPost(text: string): void {
+  addPost(text: string, photoUrl?: string): void {
     const master = this.masterProfile();
     const now = new Date();
     const day = now.getDate();
@@ -337,6 +338,7 @@ export class MockDataService {
       likes: 0,
       comments: 0,
       commentsList: [],
+      ...(photoUrl ? { photoUrl } : {}),
     };
 
     this.posts.update(list => [newPost, ...list]);

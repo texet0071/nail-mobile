@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Новый пост</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="modal-body ion-padding">
+  <!-- Блок загрузки фото -->
+  <div class="photo-section">
+    @if (photoPreview(); as preview) {
+      <div class="photo-preview-wrapper">
+        <img [src]="preview" alt="preview" class="photo-preview" />
+        <ion-button
+          fill="clear"
+          size="small"
+          class="remove-photo-btn"
+          (click)="removePhoto()"
+        >
+          <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    } @else {
+      <button
+        type="button"
+        class="photo-upload-btn"
+        (click)="fileInput.click()"
+      >
+        <ion-icon name="camera-outline" class="photo-upload-icon"></ion-icon>
+        <span>Добавить фото</span>
+      </button>
+    }
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      class="file-input-hidden"
+      (change)="onFileSelected($event)"
+    />
+  </div>
+
+  <!-- Текст поста -->
+  <ion-textarea
+    placeholder="Напишите текст нового поста..."
+    class="post-textarea"
+    autoGrow="true"
+    rows="6"
+    [value]="text()"
+    (ionInput)="onTextInput($event)"
+  ></ion-textarea>
+</div>
+
+<ion-footer>
+  <div class="submit-button-wrapper">
+    <ion-button
+      expand="block"
+      color="primary"
+      size="large"
+      class="submit-button"
+      [disabled]="!text().trim()"
+      (click)="submit()"
+    >
+      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      Опубликовать
+    </ion-button>
+  </div>
+</ion-footer>

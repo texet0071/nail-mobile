@@ -25,6 +25,11 @@
         </ion-card-header>
 
         <ion-card-content>
+          @if (post.photoUrl) {
+            <div class="post-photo-wrapper">
+              <img [src]="post.photoUrl" alt="Фото поста" class="post-photo" />
+            </div>
+          }
           <p>{{ post.text }}</p>
         </ion-card-content>
 
