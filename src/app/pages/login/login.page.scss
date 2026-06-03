@@ -85,15 +85,15 @@
   }
 
   .vk-icon {
-    color: #4C75A3;
+    color: #3b82f6;
   }
 
   .telegram-icon {
-    color: #0088CC;
+    color: #3b82f6;
   }
 
   .google-icon {
-    color: #444;
+    color: #64748b;
   }
 }
 
@@ -102,9 +102,9 @@
   margin-top: 2rem;
 
   ion-button {
-    --background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary));
-    --background-hover: linear-gradient(135deg, var(--ion-color-primary-shade), var(--ion-color-secondary-shade));
-    --box-shadow: 0 4px 16px rgba(230, 138, 158, 0.3);
+    --background: var(--ion-color-primary);
+    --background-hover: var(--ion-color-primary-shade);
+    --box-shadow: 0 4px 16px rgba(var(--ion-color-primary-rgb), 0.3);
     height: 52px;
     font-size: 1.1rem;
   }

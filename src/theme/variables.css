@@ -1,92 +1,93 @@
 /**
- * Светлая розовая тема для маникюрного салона
+ * Нейтральная светлая тема (white + grey cards + blue buttons)
  * -----------------------------------------------------
- * Мягкая, нежная цветовая гамма
+ * Подходит для любой профессии: белый фон, серые карточки, синие акценты
  */
 
 /* Отключаем тёмную тему — используем светлую */
 /* @import '@ionic/angular/css/palettes/dark.system.css'; */
 
 :root {
-  /* ===== Основные цвета ===== */
-  --ion-color-primary: #e68a9e;
-  --ion-color-primary-rgb: 230, 138, 158;
+  /* ===== Основные цвета (синий акцент) ===== */
+  --ion-color-primary: #2563eb;
+  --ion-color-primary-rgb: 37, 99, 235;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #d4798c;
-  --ion-color-primary-tint: #f0a0b2;
+  --ion-color-primary-shade: #1d4ed8;
+  --ion-color-primary-tint: #dbeafe;
 
-  --ion-color-secondary: #f2b6c5;
-  --ion-color-secondary-rgb: 242, 182, 197;
-  --ion-color-secondary-contrast: #5a3d44;
-  --ion-color-secondary-contrast-rgb: 90, 61, 68;
-  --ion-color-secondary-shade: #d5a0ae;
-  --ion-color-secondary-tint: #fccfd9;
+  --ion-color-secondary: #93c5fd;
+  --ion-color-secondary-rgb: 147, 197, 253;
+  --ion-color-secondary-contrast: #1e293b;
+  --ion-color-secondary-contrast-rgb: 30, 41, 59;
+  --ion-color-secondary-shade: #60a5fa;
+  --ion-color-secondary-tint: #bfdbfe;
 
-  --ion-color-tertiary: #f7c8b8;
-  --ion-color-tertiary-rgb: 247, 200, 184;
-  --ion-color-tertiary-contrast: #5a3d44;
-  --ion-color-tertiary-contrast-rgb: 90, 61, 68;
-  --ion-color-tertiary-shade: #d9b0a2;
-  --ion-color-tertiary-tint: #fad9cb;
+  --ion-color-tertiary: #e2e8f0;
+  --ion-color-tertiary-rgb: 226, 232, 240;
+  --ion-color-tertiary-contrast: #1e293b;
+  --ion-color-tertiary-contrast-rgb: 30, 41, 59;
+  --ion-color-tertiary-shade: #cbd5e1;
+  --ion-color-tertiary-tint: #f1f5f9;
 
-  /* ===== Нейтральные ===== */
-  --ion-color-success: #8fc9a8;
-  --ion-color-success-rgb: 143, 201, 168;
+  /* ===== Семантические ===== */
+  --ion-color-success: #22c55e;
+  --ion-color-success-rgb: 34, 197, 94;
   --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 255, 255, 255;
-  --ion-color-success-shade: #7eb194;
-  --ion-color-success-tint: #a3d4b8;
+  --ion-color-success-shade: #16a34a;
+  --ion-color-success-tint: #86efac;
 
-  --ion-color-warning: #f5c78e;
-  --ion-color-warning-rgb: 245, 199, 142;
-  --ion-color-warning-contrast: #5a3d44;
-  --ion-color-warning-contrast-rgb: 90, 61, 68;
-  --ion-color-warning-shade: #d8af7d;
-  --ion-color-warning-tint: #f7d3a0;
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #1e293b;
+  --ion-color-warning-contrast-rgb: 30, 41, 59;
+  --ion-color-warning-shade: #d97706;
+  --ion-color-warning-tint: #fcd34d;
 
-  --ion-color-danger: #e8828a;
-  --ion-color-danger-rgb: 232, 130, 138;
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
   --ion-color-danger-contrast: #ffffff;
   --ion-color-danger-contrast-rgb: 255, 255, 255;
-  --ion-color-danger-shade: #cc7279;
-  --ion-color-danger-tint: #ed959c;
+  --ion-color-danger-shade: #dc2626;
+  --ion-color-danger-tint: #fca5a5;
 
-  --ion-color-light: #fdf6f7;
-  --ion-color-light-rgb: 253, 246, 247;
-  --ion-color-light-contrast: #5a3d44;
-  --ion-color-light-contrast-rgb: 90, 61, 68;
-  --ion-color-light-shade: #dfd8d9;
-  --ion-color-light-tint: #fef7f8;
+  /* ===== Нейтральные ===== */
+  --ion-color-light: #f1f5f9;
+  --ion-color-light-rgb: 241, 245, 249;
+  --ion-color-light-contrast: #1e293b;
+  --ion-color-light-contrast-rgb: 30, 41, 59;
+  --ion-color-light-shade: #e2e8f0;
+  --ion-color-light-tint: #f8fafc;
 
-  --ion-color-medium: #b5989e;
-  --ion-color-medium-rgb: 181, 152, 158;
+  --ion-color-medium: #94a3b8;
+  --ion-color-medium-rgb: 148, 163, 184;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #9f868b;
-  --ion-color-medium-tint: #bda3a8;
+  --ion-color-medium-shade: #64748b;
+  --ion-color-medium-tint: #cbd5e1;
 
-  --ion-color-dark: #5a3d44;
-  --ion-color-dark-rgb: 90, 61, 68;
-  --ion-color-dark-contrast: #fdf6f7;
-  --ion-color-dark-contrast-rgb: 253, 246, 247;
-  --ion-color-dark-shade: #4f363c;
-  --ion-color-dark-tint: #6b5057;
+  --ion-color-dark: #1e293b;
+  --ion-color-dark-rgb: 30, 41, 59;
+  --ion-color-dark-contrast: #f8fafc;
+  --ion-color-dark-contrast-rgb: 248, 250, 252;
+  --ion-color-dark-shade: #0f172a;
+  --ion-color-dark-tint: #334155;
 
   /* ===== Фоны ===== */
-  --ion-background-color: #fffafb;
-  --ion-background-color-rgb: 255, 250, 251;
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
 
-  --ion-text-color: #5a3d44;
-  --ion-text-color-rgb: 90, 61, 68;
+  --ion-text-color: #1e293b;
+  --ion-text-color-rgb: 30, 41, 59;
 
-  --ion-toolbar-background: #fff5f7;
-  --ion-tab-bar-background: #fff5f7;
+  --ion-toolbar-background: #f8fafc;
+  --ion-tab-bar-background: #f8fafc;
   --ion-tab-bar-color-selected: var(--ion-color-primary);
   --ion-tab-bar-color: var(--ion-color-medium);
 
   --ion-item-background: #ffffff;
-  --ion-card-background: #ffffff;
+  --ion-card-background: #f8fafc;
 
-  --ion-border-color: #f0e0e3;
+  --ion-border-color: #e2e8f0;
 }

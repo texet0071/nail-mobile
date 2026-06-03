@@ -16,6 +16,7 @@ import {
 import { AboutMasterModalComponent } from '../../components/about-master-modal/about-master-modal.component';
 import { addIcons } from 'ionicons';
 import { logOutOutline, star, informationCircleOutline, chevronForwardOutline } from 'ionicons/icons';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-master-profile',
@@ -38,6 +39,7 @@ import { logOutOutline, star, informationCircleOutline, chevronForwardOutline } 
 export class MasterProfilePage {
   private readonly authService = inject(AuthService);
   private readonly modalCtrl = inject(ModalController);
+  private readonly router = inject(Router);
 
   constructor() {
     addIcons({ logOutOutline, star, informationCircleOutline, chevronForwardOutline });
@@ -48,7 +50,8 @@ export class MasterProfilePage {
   }
 
   protected onLogout(): void {
-    this.authService.logout();
+      this.authService.logout();
+      this.router.navigate(['/login'], { replaceUrl: true });
   }
 
   protected async openAboutModal(): Promise<void> {

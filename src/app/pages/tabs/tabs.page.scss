@@ -1,4 +1,4 @@
-/* Стили для табов — мягкий розовый акцент */
+/* Стили для табов — нейтральный синий акцент */
 ion-tab-bar {
   --background: var(--ion-tab-bar-background);
   border-top: 1px solid var(--ion-border-color);
@@ -21,6 +21,6 @@ ion-tab-button {
 
 ion-tab-button.tab-selected {
   ion-icon {
-    filter: drop-shadow(0 0 6px rgba(230, 138, 158, 0.4));
+    filter: drop-shadow(0 0 6px rgba(var(--ion-color-primary-rgb), 0.4));
   }
 }
