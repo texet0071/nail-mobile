@@ -1,0 +1,206 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      @if (step() > 1) {
+        <ion-button (click)="prevStep()">
+          <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      }
+    </ion-buttons>
+    <ion-title>{{ getStepTitle() }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- ================= ШАГ 1 ================= -->
+  @if (step() === 1) {
+    <div class="step-content">
+      <div class="date-header">
+        <ion-icon name="time-outline" color="primary"></ion-icon>
+        <span class="date-label">Дата: <strong>{{ formatDate(selectedDate) }}</strong></span>
+      </div>
+
+      <div class="section-title">Доступное время</div>
+
+      @if (timeSlots().length > 0) {
+        <div class="slots-grid">
+          @for (slot of timeSlots(); track slot.time) {
+            <button
+              class="slot-chip"
+              [class.slot-available]="slot.available"
+              [class.slot-unavailable]="!slot.available"
+              [class.slot-selected]="selectedTime() === slot.time && slot.available"
+              [disabled]="!slot.available"
+              (click)="selectTime(slot.time)"
+            >
+              <span class="slot-time">{{ slot.time }}</span>
+              @if (slot.available) {
+                <span class="slot-label">свободно</span>
+              } @else {
+                <span class="slot-label">занято</span>
+              }
+              @if (selectedTime() === slot.time && slot.available) {
+                <ion-icon name="checkmark-circle-outline" class="slot-check"></ion-icon>
+              }
+            </button>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <p>Нет доступного времени на эту дату</p>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- ================= ШАГ 2 ================= -->
+  @if (step() === 2) {
+    <div class="step-content">
+      <div class="date-header">
+        <ion-icon name="briefcase-outline" color="primary"></ion-icon>
+        <span class="date-label">Услуги мастера</span>
+      </div>
+
+      <div class="services-list">
+        @for (service of services(); track service.id) {
+          <button
+            class="service-card"
+            [class.service-selected]="selectedService()?.id === service.id"
+            (click)="selectService(service)"
+          >
+            <div class="service-info">
+              <span class="service-name">{{ service.name }}</span>
+              <span class="service-duration">{{ service.duration }}</span>
+            </div>
+            <div class="service-price-block">
+              <span class="service-price">{{ service.price }} ₽</span>
+              @if (selectedService()?.id === service.id) {
+                <ion-icon name="checkmark-circle-outline" color="primary" class="service-check"></ion-icon>
+              }
+            </div>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ================= ШАГ 3 ================= -->
+  @if (step() === 3) {
+    <div class="step-content">
+      <div class="date-header">
+        <ion-icon name="person-outline" color="primary"></ion-icon>
+        <span class="date-label">Ваши данные</span>
+      </div>
+
+      <div class="form-section">
+        <!-- Телефон -->
+        <ion-item class="form-item" lines="full">
+          <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
+          <ion-input
+            label="Телефон"
+            labelPlacement="stacked"
+            type="tel"
+            placeholder="+7 (___) ___-__-__"
+            [value]="phone()"
+            (ionInput)="phone.set($event.detail.value ?? '')"
+          ></ion-input>
+          <ion-button slot="end" fill="clear" size="small" (click)="copyFromProfile()">
+            <ion-icon name="copy-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <div class="copy-hint">Нажмите на иконку, чтобы скопировать из профиля</div>
+
+        <!-- Имя -->
+        <ion-item class="form-item" lines="full">
+          <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+          <ion-input
+            label="Имя"
+            labelPlacement="stacked"
+            placeholder="Ваше имя"
+            [value]="name()"
+            (ionInput)="name.set($event.detail.value ?? '')"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Комментарий -->
+        <ion-item class="form-item form-textarea" lines="full">
+          <ion-icon name="chatbox-ellipses-outline" slot="start" color="primary"></ion-icon>
+          <ion-textarea
+            label="Комментарий (необязательно)"
+            labelPlacement="stacked"
+            placeholder="Пожелания, особенности..."
+            [value]="comment()"
+            (ionInput)="comment.set($event.detail.value ?? '')"
+            autoGrow="true"
+            rows="3"
+          ></ion-textarea>
+        </ion-item>
+      </div>
+
+      <!-- Сводка записи -->
+      <div class="booking-summary">
+        <div class="summary-title">Ваша запись:</div>
+        <div class="summary-row">
+          <ion-icon name="time-outline" color="primary"></ion-icon>
+          <span>{{ formatDate(selectedDate) }}, {{ selectedTime() }}</span>
+        </div>
+        <div class="summary-row">
+          <ion-icon name="briefcase-outline" color="primary"></ion-icon>
+          <span>{{ selectedService()?.name }}</span>
+        </div>
+        <div class="summary-row summary-price">
+          <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
+          <span>{{ selectedService()?.price }} ₽</span>
+        </div>
+      </div>
+    </div>
+  }
+</ion-content>
+
+<ion-footer>
+  <div class="footer-content">
+    @if (step() === 1) {
+      <ion-button
+        expand="block"
+        color="primary"
+        size="large"
+        [disabled]="!selectedTime()"
+        (click)="nextStep()"
+      >
+        Далее
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    }
+
+    @if (step() === 2) {
+      <ion-button
+        expand="block"
+        color="primary"
+        size="large"
+        [disabled]="!selectedService()"
+        (click)="nextStep()"
+      >
+        Далее
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    }
+
+    @if (step() === 3) {
+      <ion-button
+        expand="block"
+        color="primary"
+        size="large"
+        [disabled]="!phone() || !name()"
+        (click)="onSubmit()"
+      >
+        Записаться
+        <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
+      </ion-button>
+    }
+  </div>
+</ion-footer>

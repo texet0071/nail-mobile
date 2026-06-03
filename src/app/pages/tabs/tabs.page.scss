@@ -1,0 +1,26 @@
+/* Стили для табов — мягкий розовый акцент */
+ion-tab-bar {
+  --background: var(--ion-tab-bar-background);
+  border-top: 1px solid var(--ion-border-color);
+  padding-top: 4px;
+  padding-bottom: 4px;
+  height: 60px;
+}
+
+ion-tab-button {
+  --color: var(--ion-tab-bar-color);
+  --color-selected: var(--ion-tab-bar-color-selected);
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  ion-icon {
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+  }
+}
+
+ion-tab-button.tab-selected {
+  ion-icon {
+    filter: drop-shadow(0 0 6px rgba(230, 138, 158, 0.4));
+  }
+}

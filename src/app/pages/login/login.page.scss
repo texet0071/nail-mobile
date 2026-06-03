@@ -1,0 +1,111 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+
+  h1 {
+    font-size: 4rem;
+    margin: 0;
+    background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  h2 {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+.role-selector {
+  margin-top: 1.5rem;
+
+  .role-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.login-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+
+  ion-button {
+    font-size: 0.9rem;
+    --color: var(--ion-color-medium);
+  }
+}
+
+.social-login {
+  margin-top: 2rem;
+  text-align: center;
+
+  .social-label {
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+    margin-bottom: 1rem;
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .social-icon {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .social-icon:hover {
+    transform: scale(1.15);
+  }
+
+  .vk-icon {
+    color: #4C75A3;
+  }
+
+  .telegram-icon {
+    color: #0088CC;
+  }
+
+  .google-icon {
+    color: #444;
+  }
+}
+
+
+.login-button-container {
+  margin-top: 2rem;
+
+  ion-button {
+    --background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary));
+    --background-hover: linear-gradient(135deg, var(--ion-color-primary-shade), var(--ion-color-secondary-shade));
+    --box-shadow: 0 4px 16px rgba(230, 138, 158, 0.3);
+    height: 52px;
+    font-size: 1.1rem;
+  }
+}

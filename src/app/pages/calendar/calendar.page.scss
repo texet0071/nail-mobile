@@ -1,0 +1,261 @@
+/* Секция календаря */
+.calendar-section {
+  margin-bottom: 0.5rem;
+
+  ion-datetime {
+    --background: transparent;
+    border-radius: 16px;
+    padding: 4px;
+    width: 100%;
+    min-height: 380px;
+
+    &::part(calendar-header) {
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+
+    &::part(calendar-action-button) {
+      color: var(--ion-color-primary);
+    }
+
+    &::part(calendar-day) {
+      font-weight: 500;
+      color: var(--ion-color-medium);
+      font-size: 0.8rem;
+    }
+
+    &::part(day) {
+      font-weight: 500;
+      border-radius: 50%;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    &::part(day today) {
+      background: var(--ion-color-primary-tint);
+      color: var(--ion-color-dark);
+      font-weight: 700;
+      box-shadow: 0 0 0 2px var(--ion-color-primary);
+    }
+
+    &::part(day active) {
+      background: var(--ion-color-primary);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    &::part(day focused) {
+      box-shadow: 0 0 0 2px var(--ion-color-primary);
+    }
+  }
+}
+
+.slots-section {
+  animation: fadeInUp 0.3s ease;
+}
+
+.slots-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--ion-color-dark);
+  margin-bottom: 1rem;
+
+  strong {
+    color: var(--ion-color-primary);
+  }
+}
+
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.slot-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: var(--ion-color-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  font-family: inherit;
+
+  &:focus-visible {
+    outline: 2px solid var(--ion-color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.slot-available {
+  background: #fff;
+  border-color: var(--ion-color-light-shade);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    border-color: var(--ion-color-primary-tint);
+    background: var(--ion-color-primary-tint);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.15);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.slot-unavailable {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--ion-color-light-tint);
+  border-color: transparent;
+
+  .slot-status {
+    color: var(--ion-color-medium);
+  }
+}
+
+.slot-selected {
+  border-color: var(--ion-color-primary);
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  box-shadow: 0 4px 14px rgba(var(--ion-color-primary-rgb), 0.3);
+  transform: translateY(-1px);
+
+  .slot-time {
+    color: #fff;
+  }
+
+  .slot-status {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.slot-time {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.slot-status {
+  font-size: 0.7rem;
+  color: var(--ion-color-medium);
+  margin-top: 2px;
+}
+
+.slot-check {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 1.2rem;
+  color: var(--ion-color-success);
+  background: #fff;
+  border-radius: 50%;
+}
+
+.book-section {
+  margin-top: 1.5rem;
+  animation: fadeInUp 0.3s ease 0.1s both;
+
+  ion-button {
+    --border-radius: 16px;
+    --box-shadow: 0 4px 14px rgba(var(--ion-color-primary-rgb), 0.3);
+    font-weight: 600;
+    font-size: 1rem;
+    height: 52px;
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: var(--ion-color-medium);
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 1rem;
+  color: var(--ion-color-medium);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Карточка последней записи */
+.booking-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--ion-color-light-shade);
+  animation: fadeInUp 0.3s ease;
+}
+
+.booking-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
+}
+
+.booking-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ion-color-success);
+}
+
+.booking-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.booking-card-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.95rem;
+  color: var(--ion-color-dark);
+
+  ion-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+}
+
+.booking-card-price {
+  margin-top: 0.25rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ion-color-primary);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+iom-modal {
+  --height: 80%;
+}

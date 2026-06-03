@@ -1,0 +1,86 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Портфолио</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    @for (post of posts; track post.id) {
+      <ion-card>
+        <ion-card-header>
+          <ion-item lines="none" class="post-author">
+            <ion-avatar slot="start">
+              <img [src]="post.avatar" alt="avatar" />
+            </ion-avatar>
+            <ion-label>
+              <h2>{{ post.author }}</h2>
+              <p>{{ post.date }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>{{ post.text }}</p>
+        </ion-card-content>
+
+        <div class="post-actions">
+          <ion-button fill="clear" size="small">
+            <ion-icon name="heart-outline" slot="start"></ion-icon>
+            {{ post.likes }}
+          </ion-button>
+          <ion-button fill="clear" size="small" (click)="openComments(post)">
+            <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
+            <span>{{ post.comments }}</span>
+          </ion-button>
+        </div>
+      </ion-card>
+    }
+  </ion-list>
+  <ion-modal
+    [isOpen]="isModalOpen()"
+    [breakpoints]="[0.5, 0.8, 1]"
+    [initialBreakpoint]="0.5"
+    (ionModalDidDismiss)="closeModal()">
+
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Комментарии</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        @if (selectedPost(); as post) {
+          @for (comment of post.commentsList; track comment.id) {
+            <ion-item lines="none" class="comment-item">
+              <ion-avatar slot="start">
+                <img [src]="comment.avatar" alt="avatar" />
+              </ion-avatar>
+              <ion-label class="ion-text-wrap">
+                <h3>{{ comment.author }}</h3>
+                <p>{{ comment.text }}</p>
+                <span class="comment-time">
+                <ion-icon name="time-outline"></ion-icon>
+                  {{ comment.time }}
+              </span>
+              </ion-label>
+            </ion-item>
+          } @empty {
+            <p class="ion-text-center ion-padding">Комментариев пока нет</p>
+          }
+        }
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

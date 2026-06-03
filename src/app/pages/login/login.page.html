@@ -1,0 +1,72 @@
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <div class="login-header">
+      <h1>💅</h1>
+      <h2>Маникюрная студия</h2>
+      <p>Войдите, чтобы продолжить</p>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Телефон / Email</ion-label>
+      <ion-input
+        type="text"
+        [value]="email()"
+        (ionInput)="onEmailChange($event)"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Пароль</ion-label>
+      <ion-input
+        type="password"
+        [value]="password()"
+        (ionInput)="onPasswordChange($event)"
+      ></ion-input>
+    </ion-item>
+
+    <div class="role-selector">
+      <ion-label class="role-label">Выберите роль</ion-label>
+      <ion-segment [value]="selectedRole()" (ionChange)="onRoleChange($event)">
+        <ion-segment-button value="client">
+          <ion-label>Клиент</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="master">
+          <ion-label>Мастер</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <div class="login-button-container">
+      <ion-button expand="block" (click)="onLogin()">
+        Войти как {{ selectedRole() === 'master' ? 'Мастер' : 'Клиент' }}
+      </ion-button>
+    </div>
+
+    <div class="login-links">
+      <ion-button fill="clear" (click)="onRegister()">
+        Зарегистрироваться
+      </ion-button>
+      <ion-button fill="clear" (click)="onRecoverAccount()">
+        Восстановить аккаунт
+      </ion-button>
+    </div>
+
+    <div class="social-login">
+      <p class="social-label">Или войдите через</p>
+      <div class="social-icons">
+        <ion-icon class="social-icon vk-icon" name="logo-vk" (click)="onVkLogin()"></ion-icon>
+        <ion-icon class="social-icon telegram-icon" name="paper-plane-outline" (click)="onTelegramLogin()"></ion-icon>
+        <ion-icon class="social-icon google-icon" name="logo-google" (click)="onGoogleLogin()"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <ion-toast
+    [isOpen]="showToast()"
+    [message]="toastMessage()"
+    [duration]="3000"
+    position="bottom"
+    color="danger"
+    (didDismiss)="showToast.set(false)"
+  ></ion-toast>
+</ion-content>

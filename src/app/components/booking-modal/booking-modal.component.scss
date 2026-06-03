@@ -1,0 +1,316 @@
+/* Общие */
+.step-content {
+  animation: fadeInUp 0.3s ease;
+}
+
+.date-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 0;
+}
+
+.date-header ion-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.date-label {
+  font-size: 1rem;
+  color: var(--ion-color-dark);
+
+  strong {
+    color: var(--ion-color-primary);
+  }
+}
+
+.section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ion-color-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+/* Шаг 1 — Слоты времени */
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.slot-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: var(--ion-color-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  font-family: inherit;
+
+  &:focus-visible {
+    outline: 2px solid var(--ion-color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.slot-available {
+  background: #fff;
+  border-color: var(--ion-color-light-shade);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    border-color: var(--ion-color-primary-tint);
+    background: var(--ion-color-primary-tint);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.15);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.slot-unavailable {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--ion-color-light-tint);
+  border-color: transparent;
+
+  .slot-label {
+    color: var(--ion-color-medium);
+  }
+}
+
+.slot-selected {
+  border-color: var(--ion-color-primary);
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  box-shadow: 0 4px 14px rgba(var(--ion-color-primary-rgb), 0.3);
+  transform: translateY(-1px);
+
+  .slot-time {
+    color: #fff;
+  }
+
+  .slot-label {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.slot-time {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.slot-label {
+  font-size: 0.7rem;
+  color: var(--ion-color-medium);
+  margin-top: 2px;
+}
+
+.slot-check {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 1.2rem;
+  color: var(--ion-color-success);
+  background: #fff;
+  border-radius: 50%;
+}
+
+.empty-state {
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+/* Шаг 2 — Услуги */
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.service-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  border: 2px solid var(--ion-color-light-shade);
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    border-color: var(--ion-color-primary-tint);
+    background: var(--ion-color-primary-tint);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.12);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ion-color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.service-selected {
+  border-color: var(--ion-color-primary);
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+
+  .service-name,
+  .service-duration {
+    color: #fff;
+  }
+
+  .service-price {
+    color: #fff;
+  }
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.service-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.service-duration {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+}
+
+.service-price-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.service-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.service-check {
+  font-size: 1.4rem;
+}
+
+/* Шаг 3 — Форма */
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.form-item {
+  --border-radius: 12px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: var(--ion-color-light);
+  --background: var(--ion-color-light);
+
+  ion-icon[slot="start"] {
+    font-size: 20px;
+    margin-right: 4px;
+  }
+}
+
+.form-textarea {
+  --min-height: 90px;
+}
+
+.copy-hint {
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+  margin: -4px 0 12px 16px;
+  line-height: 1.3;
+}
+
+/* Сводка записи */
+.booking-summary {
+  background: var(--ion-color-primary-tint);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  margin-top: 8px;
+}
+
+.summary-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  margin-bottom: 10px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--ion-color-dark);
+  margin-bottom: 6px;
+
+  ion-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+}
+
+.summary-price {
+  font-weight: 700;
+  color: var(--ion-color-primary);
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+/* Футер с кнопкой */
+.footer-content {
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+
+  ion-button {
+    --border-radius: 16px;
+    --box-shadow: 0 4px 14px rgba(var(--ion-color-primary-rgb), 0.3);
+    font-weight: 600;
+    font-size: 1rem;
+    height: 52px;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

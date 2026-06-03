@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon name="calendar-outline" style="margin-right: 8px; vertical-align: middle;"></ion-icon>
+      Запись
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Выбор даты -->
+  <div class="calendar-section">
+    <ion-datetime
+      presentation="date"
+      locale="ru-RU"
+      [isDateEnabled]="isDateEnabled"
+      [highlightedDates]="availableDates"
+      (ionChange)="onDateChange($event)"
+    ></ion-datetime>
+  </div>
+
+  <!-- Слоты времени (показываются только при выбранной дате) -->
+  @if (selectedDate()) {
+    <div class="slots-section">
+      <h3 class="slots-title">
+        Свободное время на <strong>{{ formatDate(selectedDate()) }}</strong>
+      </h3>
+
+
+
+      <!-- Кнопка записи -->
+      @if (selectedTime()) {
+        <div class="book-section">
+          <ion-button
+            expand="block"
+            color="primary"
+            size="large"
+            (click)="onBook()"
+          >
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            Записаться на {{ selectedTime() }}
+          </ion-button>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="empty-state">
+      <ion-icon name="calendar-outline" class="empty-icon"></ion-icon>
+      <p class="empty-text">Выберите дату, чтобы увидеть свободное время</p>
+    </div>
+  }
+
+  <!-- Список моих записей -->
+  @if (myAppointments().length > 0) {
+    <div class="bookings-section">
+      <h3 class="bookings-title">Мои записи</h3>
+
+      @for (appointment of myAppointments(); track appointment.id) {
+        <div class="booking-card">
+          <div class="booking-card-header">
+            <ion-icon
+              [name]="getStatusIcon(appointment.status)"
+              [color]="getStatusColor(appointment.status)"
+            ></ion-icon>
+            <span class="booking-card-title" [style.color]="'var(--ion-color-' + getStatusColor(appointment.status) + ')'">
+              {{ getStatusLabel(appointment.status) }}
+            </span>
+          </div>
+          <div class="booking-card-body">
+            <div class="booking-card-row">
+              <ion-icon name="time-outline" color="primary"></ion-icon>
+              <span>{{ formatDate(appointment.date) }}, {{ appointment.time }}</span>
+            </div>
+            <div class="booking-card-row">
+              <ion-icon name="briefcase-outline" color="primary"></ion-icon>
+              <span>{{ appointment.service }}</span>
+            </div>
+            <div class="booking-card-row booking-card-price">
+              <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
+              <span>{{ appointment.amount }} ₽</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</ion-content>

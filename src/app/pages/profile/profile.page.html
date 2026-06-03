@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Профиль</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="profile-header">
+    <ion-avatar class="profile-avatar">
+      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=client&backgroundColor=b6e3f4" alt="avatar" />
+    </ion-avatar>
+    <h2>Екатерина</h2>
+    <p>Постоянный клиент</p>
+  </div>
+
+  <h3 class="section-title">Мои записи</h3>
+
+  <ion-list>
+    @for (appointment of appointments(); track appointment.id) {
+      <ion-item>
+        <ion-icon
+          slot="start"
+          [name]="getStatusIcon(appointment.status)"
+          [color]="getStatusColor(appointment.status)"
+        ></ion-icon>
+        <ion-label>
+          <h3>{{ appointment.service }}</h3>
+          <p>{{ appointment.master }} • {{ appointment.date }} в {{ appointment.time }}</p>
+        </ion-label>
+        <ion-text slot="end" class="appointment-amount">
+          {{ appointment.amount }} ₽
+        </ion-text>
+        <ion-text slot="end" class="appointment-status" [color]="getStatusColor(appointment.status)">
+          {{ getStatusLabel(appointment.status) }}
+        </ion-text>
+      </ion-item>
+    }
+  </ion-list>
+
+  <ion-item lines="none">
+    <ion-label>
+      <h3><strong>Всего потрачено:</strong></h3>
+    </ion-label>
+    <ion-text slot="end" class="appointment-amount"><strong>{{ totalSpent() }} ₽</strong></ion-text>
+  </ion-item>
+</ion-content>

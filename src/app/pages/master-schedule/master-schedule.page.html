@@ -1,0 +1,134 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Моё расписание</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogout()">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Фильтр по статусу -->
+  <ion-segment
+    [value]="selectedStatus()"
+    (ionChange)="onStatusChange($event)"
+    class="status-segment"
+  >
+    <ion-segment-button value="all">
+      <ion-label>Все</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="upcoming">
+      <ion-label>Предстоит</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="completed">
+      <ion-label>Выполнено</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="cancelled">
+      <ion-label>Отменено</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Фильтр по дате -->
+  <div class="date-filter-row">
+    <ion-icon name="calendar-outline" color="primary"></ion-icon>
+    <select
+      class="date-select"
+      [value]="selectedDate() ?? ''"
+      (change)="onDateChange($event)"
+    >
+      <option value="">Все даты</option>
+      @for (date of availableDates(); track date) {
+        <option [value]="date">{{ date | date:'dd MMM yyyy' }}</option>
+      }
+    </select>
+
+    @if (selectedStatus() !== 'all' || selectedDate() !== null) {
+      <ion-button fill="clear" size="small" (click)="resetFilters()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    }
+  </div>
+
+  <!-- Блок общего заработка -->
+  @if (filteredAppointments().length > 0) {
+    <div class="earnings-card">
+      <div class="earnings-row">
+        <div class="earnings-icon">
+          <ion-icon name="wallet-outline" color="primary"></ion-icon>
+        </div>
+        <div class="earnings-info">
+          <span class="earnings-label">Общий заработок</span>
+          <span class="earnings-amount">{{ totalEarnings() }} ₽</span>
+        </div>
+      </div>
+      <div class="earnings-row">
+        <div class="earnings-icon">
+          <ion-icon name="trending-up-outline" color="success"></ion-icon>
+        </div>
+        <div class="earnings-info">
+          <span class="earnings-label">Записей показано</span>
+          <span class="earnings-count">{{ filteredAppointments().length }} из {{ appointments.length }}</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Список записей карточками -->
+  <div class="appointments-list">
+    @for (appointment of filteredAppointments(); track appointment.id) {
+      <ion-card class="appointment-card" button (click)="openDetails(appointment)">
+        <ion-card-content>
+          <div class="card-header">
+            <div class="card-client">
+              <div class="client-avatar">
+                <span>{{ appointment.client.charAt(0) }}</span>
+              </div>
+              <div class="client-info">
+                <span class="client-name">{{ appointment.client }}</span>
+                <span class="client-service">{{ appointment.service }}</span>
+              </div>
+            </div>
+            <ion-badge [color]="getStatusColor(appointment.status)" class="status-badge">
+              <ion-icon slot="start" [name]="getStatusIcon(appointment.status)"></ion-icon>
+              {{ getStatusLabel(appointment.status) }}
+            </ion-badge>
+          </div>
+
+          <div class="card-details">
+            <div class="detail-item">
+              <ion-icon name="calendar-outline" color="medium"></ion-icon>
+              <span>{{ appointment.date | date:'dd MMM yyyy' }}</span>
+            </div>
+            <div class="detail-item">
+              <ion-icon name="time-outline" color="medium"></ion-icon>
+              <span>{{ appointment.time }}</span>
+            </div>
+            <div class="detail-item">
+              <ion-icon name="cash-outline" color="medium"></ion-icon>
+              <span class="price">{{ appointment.amount }} ₽</span>
+            </div>
+          </div>
+
+          @if (appointment.clientRating > 0) {
+            <div class="card-rating">
+              @for (starIdx of [1,2,3,4,5]; track starIdx) {
+                <ion-icon
+                  [name]="starIdx <= appointment.clientRating ? 'star' : 'star-outline'"
+                  [color]="starIdx <= appointment.clientRating ? 'warning' : 'medium'"
+                  class="star-icon"
+                ></ion-icon>
+              }
+            </div>
+          }
+        </ion-card-content>
+      </ion-card>
+    } @empty {
+      <div class="empty-state">
+        <ion-icon name="calendar-outline" color="medium" class="empty-icon"></ion-icon>
+        <p>Нет записей, соответствующих фильтру</p>
+      </div>
+    }
+  </div>
+</ion-content>

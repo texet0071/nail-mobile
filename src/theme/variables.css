@@ -1,0 +1,92 @@
+/**
+ * Светлая розовая тема для маникюрного салона
+ * -----------------------------------------------------
+ * Мягкая, нежная цветовая гамма
+ */
+
+/* Отключаем тёмную тему — используем светлую */
+/* @import '@ionic/angular/css/palettes/dark.system.css'; */
+
+:root {
+  /* ===== Основные цвета ===== */
+  --ion-color-primary: #e68a9e;
+  --ion-color-primary-rgb: 230, 138, 158;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #d4798c;
+  --ion-color-primary-tint: #f0a0b2;
+
+  --ion-color-secondary: #f2b6c5;
+  --ion-color-secondary-rgb: 242, 182, 197;
+  --ion-color-secondary-contrast: #5a3d44;
+  --ion-color-secondary-contrast-rgb: 90, 61, 68;
+  --ion-color-secondary-shade: #d5a0ae;
+  --ion-color-secondary-tint: #fccfd9;
+
+  --ion-color-tertiary: #f7c8b8;
+  --ion-color-tertiary-rgb: 247, 200, 184;
+  --ion-color-tertiary-contrast: #5a3d44;
+  --ion-color-tertiary-contrast-rgb: 90, 61, 68;
+  --ion-color-tertiary-shade: #d9b0a2;
+  --ion-color-tertiary-tint: #fad9cb;
+
+  /* ===== Нейтральные ===== */
+  --ion-color-success: #8fc9a8;
+  --ion-color-success-rgb: 143, 201, 168;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #7eb194;
+  --ion-color-success-tint: #a3d4b8;
+
+  --ion-color-warning: #f5c78e;
+  --ion-color-warning-rgb: 245, 199, 142;
+  --ion-color-warning-contrast: #5a3d44;
+  --ion-color-warning-contrast-rgb: 90, 61, 68;
+  --ion-color-warning-shade: #d8af7d;
+  --ion-color-warning-tint: #f7d3a0;
+
+  --ion-color-danger: #e8828a;
+  --ion-color-danger-rgb: 232, 130, 138;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cc7279;
+  --ion-color-danger-tint: #ed959c;
+
+  --ion-color-light: #fdf6f7;
+  --ion-color-light-rgb: 253, 246, 247;
+  --ion-color-light-contrast: #5a3d44;
+  --ion-color-light-contrast-rgb: 90, 61, 68;
+  --ion-color-light-shade: #dfd8d9;
+  --ion-color-light-tint: #fef7f8;
+
+  --ion-color-medium: #b5989e;
+  --ion-color-medium-rgb: 181, 152, 158;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #9f868b;
+  --ion-color-medium-tint: #bda3a8;
+
+  --ion-color-dark: #5a3d44;
+  --ion-color-dark-rgb: 90, 61, 68;
+  --ion-color-dark-contrast: #fdf6f7;
+  --ion-color-dark-contrast-rgb: 253, 246, 247;
+  --ion-color-dark-shade: #4f363c;
+  --ion-color-dark-tint: #6b5057;
+
+  /* ===== Фоны ===== */
+  --ion-background-color: #fffafb;
+  --ion-background-color-rgb: 255, 250, 251;
+
+  --ion-text-color: #5a3d44;
+  --ion-text-color-rgb: 90, 61, 68;
+
+  --ion-toolbar-background: #fff5f7;
+  --ion-tab-bar-background: #fff5f7;
+  --ion-tab-bar-color-selected: var(--ion-color-primary);
+  --ion-tab-bar-color: var(--ion-color-medium);
+
+  --ion-item-background: #ffffff;
+  --ion-card-background: #ffffff;
+
+  --ion-border-color: #f0e0e3;
+}
