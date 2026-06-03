@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Записи за день</ion-title>
+    <ion-title>Детали заказа</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">
         <ion-icon name="close-outline" slot="icon-only"></ion-icon>
@@ -10,91 +10,117 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- Информация о дате -->
-  <div class="date-header">
-    <ion-icon name="calendar-outline" color="primary"></ion-icon>
-    <h2>{{ selectedDate }}</h2>
+  <!-- Статус заказа -->
+  <div class="status-banner">
+    <ion-chip [color]="getStatusColor(appointment.status)" class="status-chip-big">
+      <ion-icon [name]="getStatusIcon(appointment.status)"></ion-icon>
+      <ion-label>{{ getStatusLabel(appointment.status) }}</ion-label>
+    </ion-chip>
   </div>
 
-  <!-- Общая статистика -->
-  <div class="stats-row">
-    <div class="stat-card">
-      <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
-      <div class="stat-info">
-        <span class="stat-value">{{ completedCount }}</span>
-        <span class="stat-label">Выполнено</span>
+  <!-- Основная карточка заказа -->
+  <ion-card class="detail-card">
+    <ion-card-content>
+      <!-- Дата и время -->
+      <div class="info-row">
+        <ion-icon name="calendar-outline" color="primary"></ion-icon>
+        <span class="info-label">Дата:</span>
+        <span class="info-value">{{ formattedDate }}</span>
       </div>
-    </div>
-    <div class="stat-card">
-      <ion-icon name="close-circle-outline" color="danger"></ion-icon>
-      <div class="stat-info">
-        <span class="stat-value">{{ cancelledCount }}</span>
-        <span class="stat-label">Отменено</span>
+
+      <div class="info-row">
+        <ion-icon name="time-outline" color="primary"></ion-icon>
+        <span class="info-label">Время:</span>
+        <span class="info-value">{{ appointment.time }}</span>
       </div>
-    </div>
-    <div class="stat-card">
-      <ion-icon name="trending-up-outline" color="primary"></ion-icon>
-      <div class="stat-info">
-        <span class="stat-value">{{ totalEarnings }}</span>
-        <span class="stat-label">Заработано</span>
+
+      <ion-item-divider class="divider"></ion-item-divider>
+
+      <!-- Услуга -->
+      <div class="info-row">
+        <ion-icon name="briefcase-outline" color="primary"></ion-icon>
+        <span class="info-label">Услуга:</span>
+        <span class="info-value bold">{{ appointment.service }}</span>
       </div>
-    </div>
-  </div>
 
-  <!-- Список записей -->
-  <div class="records-section">
-    <h3 class="section-title">Все записи</h3>
+      <!-- Стоимость -->
+      <div class="info-row">
+        <ion-icon name="cash-outline" color="primary"></ion-icon>
+        <span class="info-label">Стоимость:</span>
+        <span class="info-value price-value">{{ appointment.amount }} ₽</span>
+      </div>
 
-    @for (record of fakeRecords; track record.id) {
-      <ion-card class="record-card" [class.cancelled]="record.status === 'cancelled'">
-        <ion-card-content>
-          <div class="record-header">
-            <ion-avatar class="record-avatar">
-              <span>{{ record.client.charAt(0) }}</span>
-            </ion-avatar>
-            <div class="record-client-info">
-              <span class="record-client-name">{{ record.client }}</span>
-              <span class="record-time">{{ record.time }}</span>
-            </div>
-            <ion-chip [color]="record.status === 'completed' ? 'success' : 'danger'" class="status-chip">
-              <ion-icon
-                [name]="record.status === 'completed' ? 'checkmark-circle-outline' : 'close-circle-outline'"
-              ></ion-icon>
-              <ion-label>{{ record.status === 'completed' ? 'Выполнено' : 'Отменено' }}</ion-label>
-            </ion-chip>
-          </div>
+      <ion-item-divider class="divider"></ion-item-divider>
 
-          <div class="record-details">
-            <div class="record-service">
-              <ion-icon name="briefcase-outline" color="primary"></ion-icon>
-              <span>{{ record.service }}</span>
-            </div>
-            <div class="record-price">
-              <ion-icon name="cash-outline" color="primary"></ion-icon>
-              <span class="price-value">{{ record.price }} ₽</span>
-            </div>
-          </div>
+      <!-- Клиент -->
+      <div class="info-row">
+        <ion-icon name="person-outline" color="primary"></ion-icon>
+        <span class="info-label">Клиент:</span>
+        <span class="info-value bold">{{ appointment.client }}</span>
+      </div>
 
-          <div class="record-rating">
-            @for (starIdx of [1,2,3,4,5]; track starIdx) {
-              <ion-icon
-                [name]="starIdx <= record.clientRating ? 'star' : 'star-outline'"
-                [color]="starIdx <= record.clientRating ? 'warning' : 'medium'"
-                class="star-icon"
-              ></ion-icon>
-            }
-          </div>
-        </ion-card-content>
-      </ion-card>
-    }
-  </div>
+      <!-- Телефон -->
+      @if (appointment.clientPhone) {
+        <div class="info-row">
+          <ion-icon name="call-outline" color="primary"></ion-icon>
+          <span class="info-label">Телефон:</span>
+          <span class="info-value">{{ appointment.clientPhone }}</span>
+        </div>
+      }
 
-  <!-- Итоговая сумма -->
+      <!-- Мастер -->
+      <div class="info-row">
+        <ion-icon name="person-outline" color="primary"></ion-icon>
+        <span class="info-label">Мастер:</span>
+        <span class="info-value">{{ appointment.master }}</span>
+      </div>
+
+      <ion-item-divider class="divider"></ion-item-divider>
+
+      <!-- Рейтинг -->
+      <div class="info-row">
+        <ion-icon name="star-outline" color="primary"></ion-icon>
+        <span class="info-label">Оценка:</span>
+        <span class="info-value">
+          @if (appointment.clientRating > 0) {
+            <span class="rating-stars">
+              @for (starIdx of starIndexes; track starIdx) {
+                <ion-icon
+                  [name]="starIdx <= appointment.clientRating ? 'star' : 'star-outline'"
+                  [color]="starIdx <= appointment.clientRating ? 'warning' : 'medium'"
+                  class="star-icon"
+                ></ion-icon>
+              }
+            </span>
+          } @else {
+            <span class="no-rating">—</span>
+          }
+        </span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Комментарий клиента -->
+  @if (appointment.clientComment) {
+    <ion-card class="comment-card">
+      <ion-card-header>
+        <div class="comment-header">
+          <ion-icon name="chatbox-ellipses-outline" color="primary"></ion-icon>
+          <ion-card-title class="comment-title">Комментарий клиента</ion-card-title>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="comment-text">{{ appointment.clientComment }}</p>
+      </ion-card-content>
+    </ion-card>
+  }
+
+  <!-- Итоговая секция -->
   <div class="total-section">
     <ion-icon name="wallet-outline" color="primary"></ion-icon>
     <div class="total-info">
-      <span class="total-label">Общий заработок за день</span>
-      <span class="total-amount">{{ totalEarnings }} ₽</span>
+      <span class="total-label">Номер заказа</span>
+      <span class="total-id">{{ appointment.id }}</span>
     </div>
   </div>
 </ion-content>

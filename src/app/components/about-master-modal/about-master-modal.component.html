@@ -12,41 +12,53 @@
 <ion-content class="ion-padding">
   <div class="about-avatar">
     <img
-      src="https://api.dicebear.com/7.x/avataaars/svg?seed=master&backgroundColor=b6e3f4"
+      [src]="profile().avatar"
       alt="avatar"
       class="avatar-img"
     />
-    <h2>Анна</h2>
-    <p class="specialization">Мастер маникюра</p>
+    <h2>{{ profile().name }}</h2>
+    <p class="specialization">{{ profile().specialization }}</p>
   </div>
 
   <ion-list class="about-list">
+    <!-- Город -->
     <ion-item>
       <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
       <ion-label>
         <h3>Город</h3>
-        <p>Екатеринбург</p>
+        <p>{{ profile().city }}</p>
       </ion-label>
     </ion-item>
 
+    <!-- Телефон -->
     <ion-item>
       <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
       <ion-label>
         <h3>Телефон</h3>
-        <p>+7 (912) 345-67-89</p>
+        <p>{{ profile().phone }}</p>
       </ion-label>
     </ion-item>
 
+    <!-- Зона работы -->
+    <ion-item>
+      <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <h3>Зона работы</h3>
+        <p>{{ profile().workZone }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Скиллы (в отдельном блоке после услуг) -->
+  <ion-list class="about-list">
     <ion-item>
       <ion-icon name="ribbon-outline" slot="start" color="primary"></ion-icon>
       <ion-label>
         <h3>Скиллы</h3>
         <p>
-          Маникюр и педикюр<br />
-          Гель-лаковое покрытие<br />
-          Наращивание ногтей<br />
-          Дизайн ногтей<br />
-          Укрепление ногтей
+          @for (skill of profile().skills; track skill; let last = $last) {
+            {{ skill }}@if (!last) {<br />}
+          }
         </p>
       </ion-label>
     </ion-item>

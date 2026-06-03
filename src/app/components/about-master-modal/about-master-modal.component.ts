@@ -12,6 +12,7 @@ import {
   IonLabel,
   IonList,
 } from '@ionic/angular/standalone';
+import { MockDataService } from '../../services/mock-data.service';
 import { addIcons } from 'ionicons';
 import {
   closeOutline,
@@ -19,6 +20,8 @@ import {
   callOutline,
   ribbonOutline,
   informationCircleOutline,
+  briefcaseOutline,
+  timeOutline,
 } from 'ionicons/icons';
 
 @Component({
@@ -41,6 +44,9 @@ import {
 })
 export class AboutMasterModalComponent {
   private readonly modalCtrl = inject(ModalController);
+  private readonly mockData = inject(MockDataService);
+
+  protected readonly profile = this.mockData.masterProfile;
 
   constructor() {
     addIcons({
@@ -49,6 +55,8 @@ export class AboutMasterModalComponent {
       callOutline,
       ribbonOutline,
       informationCircleOutline,
+      briefcaseOutline,
+      timeOutline,
     });
   }
 

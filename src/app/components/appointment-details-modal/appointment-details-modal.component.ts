@@ -1,5 +1,5 @@
-import { Component, inject, input } from '@angular/core';
-import { ModalController } from '@ionic/angular/standalone';
+import { Component, inject, Input } from '@angular/core';
+import { IonCardHeader, IonCardTitle, IonItemDivider, ModalController } from '@ionic/angular/standalone';
 import { Appointment } from '../../services/mock-data.service';
 import {
   IonHeader,
@@ -10,7 +10,6 @@ import {
   IonIcon,
   IonContent,
   IonLabel,
-  IonAvatar,
   IonChip,
   IonCard,
   IonCardContent,
@@ -29,19 +28,8 @@ import {
   briefcaseOutline,
   checkmarkCircleOutline,
   closeCircleOutline,
-  walletOutline,
-  trendingUpOutline,
+  walletOutline
 } from 'ionicons/icons';
-
-interface FakeAppointment {
-  id: number;
-  client: string;
-  service: string;
-  price: number;
-  time: string;
-  status: 'completed' | 'cancelled' | 'upcoming';
-  clientRating: number;
-}
 
 @Component({
   selector: 'app-appointment-details-modal',
@@ -55,44 +43,35 @@ interface FakeAppointment {
     IonIcon,
     IonContent,
     IonLabel,
-    IonAvatar,
     IonChip,
     IonCard,
     IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonItemDivider,
   ],
   templateUrl: './appointment-details-modal.component.html',
   styleUrls: ['./appointment-details-modal.component.scss'],
 })
 export class AppointmentDetailsModalComponent {
-  readonly appointment = input.required<Appointment>();
+  @Input() appointment!: Appointment;
 
   private readonly modalCtrl = inject(ModalController);
 
-  protected readonly fakeRecords: FakeAppointment[] = [
-    { id: 1, client: 'Анна С.', service: 'Маникюр + покрытие', price: 2500, time: '10:00', status: 'completed', clientRating: 5 },
-    { id: 2, client: 'Елена П.', service: 'Педикюр', price: 2200, time: '11:30', status: 'completed', clientRating: 4 },
-    { id: 3, client: 'Мария К.', service: 'Наращивание ресниц', price: 1800, time: '13:00', status: 'cancelled', clientRating: 0 },
-    { id: 4, client: 'Ольга И.', service: 'Стрижка + укладка', price: 3000, time: '14:30', status: 'completed', clientRating: 5 },
-    { id: 5, client: 'Светлана Д.', service: 'Окрашивание волос', price: 4500, time: '16:00', status: 'completed', clientRating: 4 },
-  ];
-
-  protected get selectedDate(): string {
-    return this.appointment()?.date ?? 'Сегодня';
+  /** Форматированная дата для отображения */
+  protected get formattedDate(): string {
+    const dateStr = this.appointment?.date;
+    if (!dateStr) return '';
+    const [year, month, day] = dateStr.split('-');
+    const months = [
+      'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+      'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
+    ];
+    return `${parseInt(day, 10)} ${months[parseInt(month, 10) - 1]} ${year}`;
   }
 
-  protected get completedCount(): number {
-    return this.fakeRecords.filter(r => r.status === 'completed').length;
-  }
-
-  protected get cancelledCount(): number {
-    return this.fakeRecords.filter(r => r.status === 'cancelled').length;
-  }
-
-  protected get totalEarnings(): number {
-    return this.fakeRecords
-      .filter(r => r.status === 'completed')
-      .reduce((sum, r) => sum + r.price, 0);
-  }
+  /** Массив [1,2,3,4,5] для отрисовки звёзд рейтинга */
+  protected readonly starIndexes = [1, 2, 3, 4, 5];
 
   constructor() {
     addIcons({
@@ -108,9 +87,32 @@ export class AppointmentDetailsModalComponent {
       briefcaseOutline,
       checkmarkCircleOutline,
       closeCircleOutline,
-      walletOutline,
-      trendingUpOutline,
+      walletOutline
     });
+  }
+
+  protected getStatusIcon(status: Appointment['status']): string {
+    switch (status) {
+      case 'completed': return 'checkmark-circle-outline';
+      case 'cancelled': return 'close-circle-outline';
+      case 'upcoming': return 'time-outline';
+    }
+  }
+
+  protected getStatusColor(status: Appointment['status']): string {
+    switch (status) {
+      case 'completed': return 'success';
+      case 'cancelled': return 'danger';
+      case 'upcoming': return 'warning';
+    }
+  }
+
+  protected getStatusLabel(status: Appointment['status']): string {
+    switch (status) {
+      case 'completed': return 'Выполнено';
+      case 'cancelled': return 'Отменено';
+      case 'upcoming': return 'Предстоит';
+    }
   }
 
   protected dismiss(): void {

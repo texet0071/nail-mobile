@@ -19,6 +19,20 @@ export interface Post {
   commentsList: Comment[];
 }
 
+export interface MasterProfile {
+  id: string;
+  name: string;
+  avatar: string;
+  specialization: string;
+  city: string;
+  phone: string;
+  rating: number;
+  reviewsCount: number;
+  skills: string[];
+  services: ServiceItem[];
+  workZone: string;
+}
+
 export interface ServiceItem {
   id: string;
   name: string;
@@ -56,8 +70,36 @@ export interface Appointment {
   providedIn: 'root',
 })
 export class MockDataService {
+  /** Реактивный профиль мастера */
+  readonly masterProfile = signal<MasterProfile>(this._getInitialMasterProfile());
+
   /** Реактивный список всех записей (доступен и для календаря, и для профиля) */
   readonly appointments = signal<Appointment[]>(this._getInitialAppointments());
+
+  /** Реактивный список постов для ленты */
+  readonly posts = signal<Post[]>(this._getInitialPosts());
+
+  private _getInitialMasterProfile(): MasterProfile {
+    return {
+      id: 'm1',
+      name: 'Юлия',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=master&backgroundColor=b6e3f4',
+      specialization: 'Мастер маникюра',
+      city: 'Екатеринбург',
+      phone: '+7 (912) 345-67-89',
+      rating: 4.9,
+      reviewsCount: 128,
+      skills: [
+        'Маникюр и педикюр',
+        'Гель-лаковое покрытие',
+        'Наращивание ногтей',
+        'Дизайн ногтей',
+        'Укрепление ногтей',
+      ],
+      services: this.getServices(),
+      workZone: 'Центральный район, ул. Ленина, 25',
+    };
+  }
 
   private _getInitialAppointments(): Appointment[] {
     return [
@@ -139,7 +181,7 @@ export class MockDataService {
     ];
   }
 
-  getPosts(): Post[] {
+  private _getInitialPosts(): Post[] {
     return [
       {
         id: '1',
@@ -274,6 +316,35 @@ export class MockDataService {
         ],
       },
     ];
+  }
+
+  /** Добавляет новый пост в начало ленты */
+  addPost(text: string): void {
+    const master = this.masterProfile();
+    const now = new Date();
+    const day = now.getDate();
+    const months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    const dateStr = `${day} ${month} ${year}`;
+
+    const newPost: Post = {
+      id: `p${Date.now()}`,
+      author: master.name,
+      avatar: master.avatar,
+      text,
+      date: dateStr,
+      likes: 0,
+      comments: 0,
+      commentsList: [],
+    };
+
+    this.posts.update(list => [newPost, ...list]);
+  }
+
+  /** Метод-обёртка для обратной совместимости */
+  getPosts(): Post[] {
+    return this.posts();
   }
 
   isDateAvailable(date: string): boolean {

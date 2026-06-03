@@ -62,3 +62,54 @@
   margin: 0;
   line-height: 1.5;
 }
+
+/* Секция услуг */
+.services-section {
+  background: var(--ion-card-background, #fff);
+  border-radius: 12px;
+  margin: 0 0.75rem 1rem;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--ion-color-light-shade, #e0e0e0);
+}
+
+.service-item:last-child {
+  border-bottom: none;
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.service-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ion-text-color, #000);
+}
+
+.service-duration {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--ion-color-medium, #666);
+}
+
+.service-duration ion-icon {
+  font-size: 0.85rem;
+}
+
+.service-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ion-color-primary, #3880ff);
+}

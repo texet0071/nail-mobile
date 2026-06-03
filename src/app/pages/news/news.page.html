@@ -10,7 +10,7 @@
   </ion-refresher>
 
   <ion-list>
-    @for (post of posts; track post.id) {
+    @for (post of posts(); track post.id) {
       <ion-card>
         <ion-card-header>
           <ion-item lines="none" class="post-author">
@@ -82,5 +82,11 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addNewPost()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
