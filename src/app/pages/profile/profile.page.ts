@@ -15,6 +15,9 @@ import {
   IonLabel,
   IonList,
   IonText,
+  IonCard,
+  IonCardContent,
+  IonBadge,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, checkmarkCircleOutline, closeCircleOutline, timeOutline, logOutOutline } from 'ionicons/icons';
@@ -35,6 +38,9 @@ import { arrowBackOutline, checkmarkCircleOutline, closeCircleOutline, timeOutli
     IonLabel,
     IonList,
     IonText,
+    IonCard,
+    IonCardContent,
+    IonBadge,
   ],
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],

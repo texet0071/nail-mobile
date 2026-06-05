@@ -20,27 +20,33 @@
 
   <h3 class="section-title">Мои записи</h3>
 
-  <ion-list>
+  <div class="appointments-list">
     @for (appointment of appointments(); track appointment.id) {
-      <ion-item>
-        <ion-icon
-          slot="start"
-          [name]="getStatusIcon(appointment.status)"
-          [color]="getStatusColor(appointment.status)"
-        ></ion-icon>
-        <ion-label>
-          <h3>{{ appointment.service }}</h3>
-          <p>{{ appointment.master }} • {{ appointment.date }} в {{ appointment.time }}</p>
-        </ion-label>
-        <ion-text slot="end" class="appointment-amount">
-          {{ appointment.amount }} ₽
-        </ion-text>
-        <ion-text slot="end" class="appointment-status" [color]="getStatusColor(appointment.status)">
-          {{ getStatusLabel(appointment.status) }}
-        </ion-text>
-      </ion-item>
+      <ion-card class="appointment-card">
+        <ion-card-content>
+          <div class="card-top-row">
+            <div class="card-service-info">
+              <ion-icon
+                [name]="getStatusIcon(appointment.status)"
+                [color]="getStatusColor(appointment.status)"
+                class="card-status-icon"
+              ></ion-icon>
+              <div>
+                <h3>{{ appointment.service }}</h3>
+                <p>{{ appointment.master }} • {{ appointment.date }} в {{ appointment.time }}</p>
+              </div>
+            </div>
+            <ion-text class="appointment-amount">{{ appointment.amount }} ₽</ion-text>
+          </div>
+          <div class="card-status-row">
+            <ion-badge [color]="getStatusColor(appointment.status)">
+              {{ getStatusLabel(appointment.status) }}
+            </ion-badge>
+          </div>
+        </ion-card-content>
+      </ion-card>
     }
-  </ion-list>
+  </div>
 
   <ion-item lines="none">
     <ion-label>
